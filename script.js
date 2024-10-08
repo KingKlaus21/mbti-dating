@@ -108,3 +108,181 @@ function getPersonalityType(social, thought, emotion, insight) {
 }
 
 getCategoryValues();
+
+
+
+
+const questions = [
+    {
+        question: "I like parties",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "I feel comfortable in groups",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "I get my energy from other people",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "When learning new things I prefer facts, details, and practical applications over abstract ideas and theories",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "When solving a problem I tend to focus on the present situation and rely on past experiences instead of considering the future and creating new approaches",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "When recalling an event I remember specific facts and details rather than the broader implications of the event",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "When making decisions I focus on logic more than the impact the decision will have on other people",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "In a disagreement I usually prioritize finding a fair and rational solution over striving to maintain harmony and understanding others' feelings",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "When giving feedback I tend to be direct and straightforward rather than tactful and considerate",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "When planning my day I stick to a schedule rather than going with the flow",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "When faced with a new project I plan clear deadlines rather than starting once inspiration strikes",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    },
+    {
+        question: "In my daily life I like to be organized and settled instead of flexibile and adaptable",
+        answers: [
+            { text: "Strongly Disagree", correct: true },
+            { text: "Disagree", correct: false },
+            { text: "Unsure", correct: false },
+            { text: "Agree", correct: false },
+            { text: "Strongly Agree"}
+        ]
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+
+function startQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+    showQuestion();
+}
+
+function showQuestion() {
+    const question = questions[currentQuestion];
+    questionElement.innerHTML = question.question;
+    answerButtons.innerHTML = "";
+
+    question.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        button.addEventListener("click", () => selectAnswer(answer));
+        answerButtons.appendChild(button);
+    });
+}
+
+function selectAnswer(answer) {
+    if (answer.correct) {
+        score++;
+    }
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+        showQuestion();
+    } else {
+        questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+        nextButton.innerHTML = "Play Again";
+    }
+}
+
+nextButton.addEventListener("click", () => {
+    if (currentQuestion < questions.length) {
+        showQuestion();
+    } else {
+        startQuiz();
+    }
+});
+
+startQuiz();
